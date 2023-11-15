@@ -1,0 +1,8 @@
+Crear un archivo con los scanners apagado utilizar jq para ver la informacion clara
+file=scannners-$(date +"%d-%m-%Y").json
+curl --request GET \
+     --url https://cloud.tenable.com/scanners \
+     --header 'X-ApiKeys: accessKey=;secretKey=' \
+     --header 'accept: application/json' > $file 
+## extraer solo los offline scanners
+jq '.scanners | map(select(.status == "off"))' $file > offline-scanners.json
